@@ -93,6 +93,9 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         draw.setValues()
         self.setAcceptDrops(True)
 
+        self.loadVideosFromSettings()
+
+
     def loadVideosFromSettings(self):
 
         # Get Video Manager List
