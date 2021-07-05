@@ -31,5 +31,5 @@ pyrcc5 ui/resources.qrc -o gui/resources_rc.py
 echo "Translations"
 pylupdate5 i18n/qgisfmv.pro
 cd ..
-sh pull-transifex-translations.sh
-sh push-transifex-translations.sh
+#sh pull-transifex-translations.sh
+#sh push-transifex-translations.sh
