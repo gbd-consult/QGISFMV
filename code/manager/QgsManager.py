@@ -238,8 +238,10 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                 self.AddFileRowToManager(
                     os.path.basename(filename),
                     filename,
-                    klv_folder = os.path.join(
+                    islocal=True,
+                    klv_folder=os.path.join(
                         os.path.dirname(filename),
+                        os.path.basename(filename).split('.')[0],
                         'klv'
                     )
                 )
