@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1341</width>
+    <width>1258</width>
     <height>445</height>
    </rect>
   </property>
@@ -53,9 +53,14 @@
        </property>
        <addaction name="actionOpen_Stream"/>
        <addaction name="separator"/>
+       <addaction name="actionLoad_from_Database"/>
+       <addaction name="actionOpen_selected_video"/>
+       <addaction name="separator"/>
        <addaction name="actionOpen_MPEG2_File"/>
        <addaction name="separator"/>
        <addaction name="actionCreate_MISB_File"/>
+       <addaction name="separator"/>
+       <addaction name="actionSettings"/>
        <addaction name="separator"/>
        <addaction name="CloseButton"/>
       </widget>
@@ -230,6 +235,21 @@ color: rgb(56, 95, 107);
     <string>C&amp;lose</string>
    </property>
   </action>
+  <action name="actionLoad_from_Database">
+   <property name="text">
+    <string>Load from Database</string>
+   </property>
+  </action>
+  <action name="actionOpen_selected_video">
+   <property name="text">
+    <string>Open Selected Videos from Layer</string>
+   </property>
+  </action>
+  <action name="actionSettings">
+   <property name="text">
+    <string>Settings</string>
+   </property>
+  </action>
  </widget>
  <resources>
   <include location="resources.qrc"/>
@@ -315,6 +335,54 @@ color: rgb(56, 95, 107);
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>actionLoad_from_Database</sender>
+   <signal>triggered()</signal>
+   <receiver>ManagerWindow</receiver>
+   <slot>openDatabaseDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionOpen_selected_video</sender>
+   <signal>triggered()</signal>
+   <receiver>ManagerWindow</receiver>
+   <slot>openSelectedVideo()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionSettings</sender>
+   <signal>triggered()</signal>
+   <receiver>ManagerWindow</receiver>
+   <slot>openSettingsDialog()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>628</x>
+     <y>222</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>openVideoFileDialog()</slot>
@@ -322,5 +390,8 @@ color: rgb(56, 95, 107);
   <slot>openStreamDialog()</slot>
   <slot>openMuiltiplexorDialog()</slot>
   <slot>closeFMV()</slot>
+  <slot>openDatabaseDialog()</slot>
+  <slot>openSelectedVideo()</slot>
+  <slot>openSettingsDialog()</slot>
  </slots>
 </ui>

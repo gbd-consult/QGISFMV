@@ -20,6 +20,8 @@ from QGIS_FMV.converter.ffmpeg import FFMpeg
 from QGIS_FMV.gui.ui_FmvManager import Ui_ManagerWindow
 from QGIS_FMV.manager.QgsMultiplexor import Multiplexor
 from QGIS_FMV.manager.QgsFmvOpenStream import OpenStream
+from QGIS_FMV.manager.QgsFmvOpenDatabase import DatabaseDialog
+from QGIS_FMV.manager.QgsFmvSettings import SettingsDialog
 from QGIS_FMV.player.QgsFmvPlayer import QgsFmvPlayer
 from QGIS_FMV.utils.QgsFmvUtils import (
     askForFiles,
@@ -204,6 +206,47 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.Muiltiplexor.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint)
         self.Muiltiplexor.exec_()
         return
+
+    def openDatabaseDialog(self):
+        """ Open Database Dialog"""
+        self.database_dialog = DatabaseDialog(
+                self.iface, parent=self
+        )
+        self.database_dialog.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint)
+        self.database_dialog.exec_()
+        return
+
+    def openSettingsDialog(self):
+        """ Open Settings Dialog"""
+        self.settings_dialog = SettingsDialog(
+                self.iface, parent=self
+        )
+        self.settings_dialog.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint)
+        self.settings_dialog.exec_()
+        return
+
+    def openSelectedVideo(self):
+        s = QSettings()
+        video_dir = s.value('QGIS_FMV/Settings/video_dir')
+        if video_dir:
+            layer = self.iface.activeLayer()
+            for feat in layer.selectedFeatures():
+                filename = os.path.join(
+                    video_dir,
+                    feat.attribute('dateiname')
+                )
+                self.AddFileRowToManager(
+                    os.path.basename(filename),
+                    filename,
+                    klv_folder = os.path.join(
+                        os.path.dirname(filename),
+                        'klv'
+                    )
+                )
+            print(filename)
+        else:
+            pass
+            ## TODO Error msg
 
     def AddFileRowToManager(
         self, name, filename, load_id=None, islocal=False, klv_folder=None

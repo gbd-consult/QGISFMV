@@ -23,6 +23,8 @@ pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvMultiplexer.ui -o gui/ui_FmvMultiplex
 pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvOpenStream.ui -o gui/ui_FmvOpenStream.py  
 pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvOptions.ui -o gui/ui_FmvOptions.py  
 pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvPlayer.ui -o gui/ui_FmvPlayer.py  
+pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvOpenDatabase.ui -o gui/ui_FmvOpenDatabase.py  
+pyuic5 --import-from QGIS_FMV.gui ui/ui_FmvSettings.ui -o gui/ui_FmvSettings.py  
 
 echo "converting resources file"
 
