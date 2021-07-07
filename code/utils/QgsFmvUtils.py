@@ -838,14 +838,15 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
                     list(t_lyr.getFeatures())[0].geometry().asPoint().y(),
                 )
             )
+            f_lyr_feats = f_lyr.getFeatures()
+            if len(list(f_lyr_feats)) > 0:
+                rect = list(f_lyr_feats)[0].geometry().boundingBox()
+                rectLL = xform.transform(QgsPointXY(rect.xMinimum(), rect.yMinimum()))
+                rectUR = xform.transform(QgsPointXY(rect.xMaximum(), rect.yMaximum()))
 
-            rect = list(f_lyr.getFeatures())[0].geometry().boundingBox()
-            rectLL = xform.transform(QgsPointXY(rect.xMinimum(), rect.yMinimum()))
-            rectUR = xform.transform(QgsPointXY(rect.xMaximum(), rect.yMaximum()))
-
-            f_lyr_out_extent = QgsRectangle(rectLL, rectUR)
+                f_lyr_out_extent = QgsRectangle(rectLL, rectUR)
             t_lyr_out_extent = QgsRectangle(
-                transT.x(), transT.y(), transT.x(), transT.y()
+            transT.x(), transT.y(), transT.x(), transT.y()
             )
             p_lyr_out_extent = QgsRectangle(
                 transP.x(), transP.y(), transP.x(), transP.y()

@@ -107,10 +107,20 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
             filename = s.value(getNameSpace() + "/Manager_List/" + load_id)
             _, name = os.path.split(filename)
 
-            folder = getVideoFolder(filename)
-            klv_folder = os.path.join(folder, "klv")
+            klv_folder = os.path.join(
+                os.path.dirname(filename),
+                os.path.splitext(name)[0],
+                'klv'
+            )
             exist = os.path.exists(klv_folder)
-
+            if not exist:
+                ## fallback to old klv_folder
+                klv_folder = os.path.join(
+                    getVideoFolder(filename),
+                    'klv'
+                )
+                exist = os.path.exists(klv_folder)
+            
             if exist:
                 self.AddFileRowToManager(name, filename, load_id, exist, klv_folder)
             else:
@@ -466,9 +476,16 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         path = self.VManager.item(model.row(), 3).text()
         text = self.VManager.item(model.row(), 1).text()
 
-        folder = getVideoFolder(text)
-        klv_folder = os.path.join(folder, "klv")
+        klv_folder = os.path.join(
+            os.path.dirname(path),
+            os.path.splitext(text)[0],
+            'klv'
+        )
         exist = os.path.exists(klv_folder)
+        if not exist:
+            folder = getVideoFolder(text)
+            klv_folder = os.path.join(folder, "klv")
+            exist = os.path.exists(klv_folder)
 
         # First time we open the player
         if self._PlayerDlg is None:
