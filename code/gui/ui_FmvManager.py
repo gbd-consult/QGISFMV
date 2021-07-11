@@ -154,8 +154,8 @@ class Ui_ManagerWindow(object):
         self.actionOpen_MPEG2_File.triggered.connect(ManagerWindow.openVideoFileDialog)
         self.actionCreate_MISB_File.triggered.connect(ManagerWindow.openMuiltiplexorDialog)
         self.CloseButton.triggered.connect(ManagerWindow.closeFMV)
-        self.actionLoad_from_Database.triggered.connect(ManagerWindow.openDatabaseDialog)
-        self.actionOpen_selected_video.triggered.connect(ManagerWindow.openSelectedVideo)
+        self.actionLoad_from_Database.triggered.connect(ManagerWindow.add_video_layer)
+        self.actionOpen_selected_video.triggered.connect(ManagerWindow.open_selected_video)
         self.actionSettings.triggered.connect(ManagerWindow.openSettingsDialog)
         QtCore.QMetaObject.connectSlotsByName(ManagerWindow)
 

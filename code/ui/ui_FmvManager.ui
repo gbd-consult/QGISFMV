@@ -339,7 +339,7 @@ color: rgb(56, 95, 107);
    <sender>actionLoad_from_Database</sender>
    <signal>triggered()</signal>
    <receiver>ManagerWindow</receiver>
-   <slot>openDatabaseDialog()</slot>
+   <slot>add_video_layer()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -355,7 +355,7 @@ color: rgb(56, 95, 107);
    <sender>actionOpen_selected_video</sender>
    <signal>triggered()</signal>
    <receiver>ManagerWindow</receiver>
-   <slot>openSelectedVideo()</slot>
+   <slot>open_selected_video()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -390,8 +390,8 @@ color: rgb(56, 95, 107);
   <slot>openStreamDialog()</slot>
   <slot>openMuiltiplexorDialog()</slot>
   <slot>closeFMV()</slot>
-  <slot>openDatabaseDialog()</slot>
-  <slot>openSelectedVideo()</slot>
+  <slot>add_video_layer()</slot>
+  <slot>open_selected_video()</slot>
   <slot>openSettingsDialog()</slot>
  </slots>
 </ui>

@@ -37,6 +37,11 @@ from QGIS_FMV.utils.QgsFmvUtils import (
 from QGIS_FMV.utils.QgsUtils import QgsUtils as qgsu
 from qgis.core import (
     QgsPointXY,
+    QgsProviderRegistry,
+    QgsProviderConnectionException,
+    QgsDataSourceUri,
+    QgsWkbTypes,
+    QgsVectorLayer,
     QgsCoordinateReferenceSystem,
     QgsProject,
     QgsCoordinateTransform,
@@ -71,6 +76,8 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.loading = False
         self.playlist = QMediaPlaylist()
         self.VManager.viewport().installEventFilter(self)
+
+        self.settings = QSettings()
 
         # Context Menu
         self.VManager.customContextMenuRequested.connect(self.__context_menu)
@@ -235,9 +242,40 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.settings_dialog.exec_()
         return
 
-    def openSelectedVideo(self):
-        s = QSettings()
-        video_dir = s.value('QGIS_FMV/Settings/video_dir')
+    
+    def add_video_layer(self):
+        db = self.settings.value('QGIS_FMV/Settings/db')
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        if db and db in metadata.connections().keys():
+            conn = metadata.connections()[db]
+            try:
+                tablename = 'datei_view'
+                schemaname = 'video'
+                uri = QgsDataSourceUri(
+                    conn.uri()
+                )
+                uri.setDataSource(schemaname, tablename, 'geom')
+                uri.setSrid('25832')
+                uri.setWkbType(QgsWkbTypes.LineString)
+                uri.setKeyColumn('video_id')
+                layer = QgsVectorLayer(uri.uri(False), tablename, 'postgres')
+                QgsProject.instance().addMapLayer(layer)
+
+                self.iface.showAttributeTable(layer)
+                self.accept()
+            except QgsProviderConnectionException as e:
+                ## TODO: Error message!
+                print(e)
+
+
+
+        else:
+            pass
+            ## TODO Error msg
+
+
+    def open_selected_video(self):
+        video_dir = self.settings.value('QGIS_FMV/Settings/video_dir')
         if video_dir:
             layer = self.iface.activeLayer()
             for feat in layer.selectedFeatures():
