@@ -61,6 +61,7 @@ class SettingsDialog(QDialog, Ui_Settings):
                 self.iface.messageBar().pushSuccess(
                     'Connection successful!',
                     'successfully connected to {}'.format(db))
+                self.parent.conn = conn
             else:
                 self.iface.messageBar().pushWarning(
                     'Not a valid database!',

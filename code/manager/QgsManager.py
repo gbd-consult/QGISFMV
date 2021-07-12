@@ -260,12 +260,17 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                 self.iface.showAttributeTable(layer)
 
             except QgsProviderConnectionException as e:
-                ## TODO: Error message!
+                self.iface.messageBar().pushCritical(
+                    "Connection to Database failed!",
+                    "failed to connect to the Database."
+                )
                 self.conn = None
                 print(e)
         else:
-            pass
-            ## TODO Error msg
+            self.iface.messageBar().pushCritical(
+                "No Database connection!",
+                "You need to set up a valid db connection in the Settings."
+            )
 
 
     def open_selected_video(self):
@@ -273,24 +278,32 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         if video_dir:
             layer = self.iface.activeLayer()
             for feat in layer.selectedFeatures():
-                filename = os.path.join(
-                    video_dir,
-                    feat.attribute('dateiname')
-                )
-                self.AddFileRowToManager(
-                    os.path.basename(filename),
-                    filename,
-                    islocal=True,
-                    klv_folder=os.path.join(
-                        os.path.dirname(filename),
-                        os.path.basename(filename).split('.')[0],
-                        'klv'
+                try:
+                    filename = os.path.join(
+                        video_dir,
+                        feat.attribute('dateiname')
                     )
-                )
-            print(filename)
+                    self.AddFileRowToManager(
+                        os.path.basename(filename),
+                        filename,
+                        islocal=True,
+                        klv_folder=os.path.join(
+                            os.path.dirname(filename),
+                            os.path.basename(filename).split('.')[0],
+                            'klv'
+                        )
+                    )
+                except KeyError as e:
+                    self.iface.messageBar().pushCritical(
+                        'Not a valid Layer!',
+                        'Layer {} is not valid.'.format(layer.name())
+                    )
+                    break
         else:
-            pass
-            ## TODO Error msg
+            self.iface.messageBar().pushCritical(
+                "No video directory!",
+                "You need to set up a video directory in the Settings."
+            )
 
     def AddFileRowToManager(
         self, name, filename, load_id=None, islocal=False, klv_folder=None
