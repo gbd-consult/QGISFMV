@@ -17,6 +17,7 @@ from qgis.PyQt.QtWidgets import (
     QToolBar,
 )
 from qgis.core import Qgis as QGis, QgsTask, QgsApplication, QgsRasterLayer, QgsProject
+from qgis.gui import QgsMapToolEmitPoint
 
 from PyQt5.QtMultimedia import QMediaPlayer, QMediaPlaylist
 
@@ -101,6 +102,10 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         self.DrawToolBar.addSeparator()
         self.btn_stop.setEnabled(False)
         self.PrecisionTimeStamp = ""
+
+        # Setup Canvas and MapTool
+        self.map_canvas = self.iface.mapCanvas()
+        self.point_tool = QgsMapToolEmitPoint(self.map_canvas)
 
         # Draw Polygon QToolButton
         self.toolBtn_DPolygon.setDefaultAction(self.actionDraw_Polygon)
@@ -199,8 +204,37 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         # Defalut WGS 84/ World Mercator (3D)
         # QgsProject.instance().setCrs(QgsCoordinateReferenceSystem(3395))
 
+        self.point_tool.canvasClicked.connect(self.on_canvas_click)
+
     def setMetaReader(self, meta_reader):
         self.meta_reader = meta_reader
+
+    def jump_to_position(self):
+        """Activates the Point MapTool"""
+        self.map_canvas.setMapTool(self.point_tool)
+
+    def on_canvas_click(self, point):
+        """ Jump in video based on map position"""
+        conn = self.parent.conn
+        self.map_canvas.unsetMapTool(self.point_tool)
+
+        if conn:
+            dateiname = os.path.relpath(
+                self.fileName,
+                self.parent.settings.value('QGIS_FMV/Settings/video_dir')
+            )
+            res = conn.executeSql(
+                """SELECT id, ST_Distance(geom, ST_GeomFromText('{}', 25832)) as dist,
+                time_diff
+                FROM video.telemetry_view WHERE dateiname = '{}'
+                ORDER BY dist
+                LIMIT 1
+                """.format(point.asWkt(), dateiname))
+            self.player.setPosition(int(res[0][2] * 1000))
+        else:
+            ## TODO: Error Message
+            pass
+
 
     def centerMapPlatform(self, checked):
         """Center map on Platform

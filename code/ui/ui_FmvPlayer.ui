@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1111</width>
-    <height>987</height>
+    <height>1002</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -359,6 +359,13 @@
         </widget>
        </item>
        <item>
+        <widget class="QPushButton" name="btn_jump_position">
+         <property name="text">
+          <string>Jump to map position</string>
+         </property>
+        </widget>
+       </item>
+       <item>
         <spacer name="horizontalSpacer_5">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -698,7 +705,7 @@
      <x>0</x>
      <y>0</y>
      <width>1111</width>
-     <height>39</height>
+     <height>24</height>
     </rect>
    </property>
    <property name="contextMenuPolicy">
@@ -2280,6 +2287,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>btn_jump_position</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>jump_to_position()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>939</x>
+     <y>868</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>555</x>
+     <y>500</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>toggleGroup(bool)</slot>
@@ -2336,5 +2359,6 @@
   <slot>VideoMeasureArea(bool)</slot>
   <slot>MouseLocationCoordinates(int)</slot>
   <slot>stamp(bool)</slot>
+  <slot>jump_to_position()</slot>
  </slots>
 </ui>

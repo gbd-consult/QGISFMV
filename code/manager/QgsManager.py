@@ -20,7 +20,6 @@ from QGIS_FMV.converter.ffmpeg import FFMpeg
 from QGIS_FMV.gui.ui_FmvManager import Ui_ManagerWindow
 from QGIS_FMV.manager.QgsMultiplexor import Multiplexor
 from QGIS_FMV.manager.QgsFmvOpenStream import OpenStream
-from QGIS_FMV.manager.QgsFmvOpenDatabase import DatabaseDialog
 from QGIS_FMV.manager.QgsFmvSettings import SettingsDialog
 from QGIS_FMV.player.QgsFmvPlayer import QgsFmvPlayer
 from QGIS_FMV.utils.QgsFmvUtils import (
@@ -78,6 +77,8 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.VManager.viewport().installEventFilter(self)
 
         self.settings = QSettings()
+        # DB Connection
+        self.conn = None
 
         # Context Menu
         self.VManager.customContextMenuRequested.connect(self.__context_menu)
@@ -103,6 +104,7 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.setAcceptDrops(True)
 
         self.loadVideosFromSettings()
+        self.load_db_from_settings()
 
 
     def loadVideosFromSettings(self):
@@ -133,6 +135,12 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
             else:
                 if os.path.isfile(filename):
                     self.AddFileRowToManager(name, filename, load_id)
+
+    def load_db_from_settings(self):
+        db = self.settings.value('QGIS_FMV/Settings/db')
+        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
+        if db and db in metadata.connections().keys():
+            self.conn = metadata.connections()[db]
 
     def eventFilter(self, source, event):
         """ Event Filter """
@@ -224,15 +232,6 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.Muiltiplexor.exec_()
         return
 
-    def openDatabaseDialog(self):
-        """ Open Database Dialog"""
-        self.database_dialog = DatabaseDialog(
-                self.iface, parent=self
-        )
-        self.database_dialog.setWindowFlags(Qt.Window | Qt.WindowCloseButtonHint)
-        self.database_dialog.exec_()
-        return
-
     def openSettingsDialog(self):
         """ Open Settings Dialog"""
         self.settings_dialog = SettingsDialog(
@@ -244,15 +243,12 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
 
     
     def add_video_layer(self):
-        db = self.settings.value('QGIS_FMV/Settings/db')
-        metadata = QgsProviderRegistry.instance().providerMetadata('postgres')
-        if db and db in metadata.connections().keys():
-            conn = metadata.connections()[db]
+        if self.conn:
             try:
                 tablename = 'datei_view'
                 schemaname = 'video'
                 uri = QgsDataSourceUri(
-                    conn.uri()
+                    self.conn.uri()
                 )
                 uri.setDataSource(schemaname, tablename, 'geom')
                 uri.setSrid('25832')
@@ -262,13 +258,11 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                 QgsProject.instance().addMapLayer(layer)
 
                 self.iface.showAttributeTable(layer)
-                self.accept()
+
             except QgsProviderConnectionException as e:
                 ## TODO: Error message!
+                self.conn = None
                 print(e)
-
-
-
         else:
             pass
             ## TODO Error msg

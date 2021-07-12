@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_PlayerWindow(object):
     def setupUi(self, PlayerWindow):
         PlayerWindow.setObjectName("PlayerWindow")
-        PlayerWindow.resize(1111, 987)
+        PlayerWindow.resize(1111, 1002)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -155,6 +155,9 @@ class Ui_PlayerWindow(object):
         self.cmb_cursorCoord.addItem("")
         self.cmb_cursorCoord.addItem("")
         self.horizontalLayout_3.addWidget(self.cmb_cursorCoord)
+        self.btn_jump_position = QtWidgets.QPushButton(self.groupBox)
+        self.btn_jump_position.setObjectName("btn_jump_position")
+        self.horizontalLayout_3.addWidget(self.btn_jump_position)
         spacerItem3 = QtWidgets.QSpacerItem(40, 20, QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Minimum)
         self.horizontalLayout_3.addItem(spacerItem3)
         self.btn_CaptureFrame = QtWidgets.QPushButton(self.groupBox)
@@ -287,7 +290,7 @@ class Ui_PlayerWindow(object):
         self.verticalLayout.addWidget(self.gb_PlayerControls)
         PlayerWindow.setCentralWidget(self.centralwidget)
         self.menubarwidget = QtWidgets.QMenuBar(PlayerWindow)
-        self.menubarwidget.setGeometry(QtCore.QRect(0, 0, 1111, 39))
+        self.menubarwidget.setGeometry(QtCore.QRect(0, 0, 1111, 24))
         self.menubarwidget.setContextMenuPolicy(QtCore.Qt.CustomContextMenu)
         self.menubarwidget.setStyleSheet("QMenuBar {\n"
 "    background-color: transparent;\n"
@@ -659,6 +662,7 @@ class Ui_PlayerWindow(object):
         self.actionNDVI.triggered['bool'].connect(PlayerWindow.NDVIFilter)
         self.actionCapture_Georeferenced_Frame.triggered.connect(PlayerWindow.ExtractCurrentGeoFrame)
         self.cmb_cursorCoord.currentIndexChanged['int'].connect(PlayerWindow.MouseLocationCoordinates)
+        self.btn_jump_position.clicked.connect(PlayerWindow.jump_to_position)
         QtCore.QMetaObject.connectSlotsByName(PlayerWindow)
 
     def retranslateUi(self, PlayerWindow):
@@ -671,6 +675,7 @@ class Ui_PlayerWindow(object):
         self.btn_GeoReferencing.setShortcut(_translate("PlayerWindow", "Ctrl+M"))
         self.cmb_cursorCoord.setItemText(0, _translate("PlayerWindow", "WGS84"))
         self.cmb_cursorCoord.setItemText(1, _translate("PlayerWindow", "MGRS"))
+        self.btn_jump_position.setText(_translate("PlayerWindow", "Jump to map position"))
         self.btn_CaptureFrame.setToolTip(_translate("PlayerWindow", "<html><head/><body><p>Capture current frame</p></body></html>"))
         self.btn_CaptureFrame.setShortcut(_translate("PlayerWindow", "Ctrl+Q"))
         self.gb_PlayerControls.setTitle(_translate("PlayerWindow", "Controls"))
