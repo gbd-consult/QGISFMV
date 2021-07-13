@@ -573,32 +573,30 @@ def UpdateTrajectoryData(packet, ele):
     """ Update Trajectory Values """
     lat = packet.SensorLatitude
     lon = packet.SensorLongitude
-    alt = packet.SensorTrueAltitude
 
     global groupName
     trajectoryLyr = selectLayerByName(Trajectory_lyr, groupName)
 
     try:
-        if all(v is not None for v in [trajectoryLyr, lat, lon, alt]):
+        if all(v is not None for v in [trajectoryLyr, lat, lon]):
             trajectoryLyr.startEditing()
             f = QgsFeature()
             if trajectoryLyr.featureCount() == 0:
-                f.setAttributes([lon, lat, alt])
+                f.setAttributes([lon, lat])
                 f.setGeometry(
-                    QgsLineString(QgsPoint(lon, lat, alt), QgsPoint(lon, lat, alt))
+                    QgsLineString(QgsPoint(lon, lat), QgsPoint(lon, lat))
                 )
                 trajectoryLyr.addFeatures([f])
 
             else:
                 f_last = trajectoryLyr.getFeature(trajectoryLyr.featureCount())
-                f.setAttributes([lon, lat, alt])
+                f.setAttributes([lon, lat])
                 f.setGeometry(
                     QgsLineString(
-                        QgsPoint(lon, lat, alt),
+                        QgsPoint(lon, lat),
                         QgsPoint(
                             f_last.attribute(0),
                             f_last.attribute(1),
-                            f_last.attribute(2),
                         ),
                     )
                 )
