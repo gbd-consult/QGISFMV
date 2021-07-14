@@ -244,6 +244,13 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
     
     def add_video_layer(self):
         if self.conn:
+            layername = 'fmv_videos'
+            project = QgsProject.instance()
+            layers  = project.mapLayersByName(layername)
+            if layers != []:
+                project.removeMapLayers(
+                    [x.id() for x in layers]
+                    )
             try:
                 tablename = 'datei_view'
                 schemaname = 'video'
@@ -254,7 +261,7 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                 uri.setSrid('25832')
                 uri.setWkbType(QgsWkbTypes.LineString)
                 uri.setKeyColumn('video_id')
-                layer = QgsVectorLayer(uri.uri(False), tablename, 'postgres')
+                layer = QgsVectorLayer(uri.uri(False), layername, 'postgres')
                 QgsProject.instance().addMapLayer(layer)
 
                 self.iface.showAttributeTable(layer)
