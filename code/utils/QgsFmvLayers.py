@@ -825,60 +825,6 @@ def CreateVideoLayers(ele, name):
         SetDefaultFootprintStyle(lyr_footprint)
         addLayerNoCrsDialog(lyr_footprint, group=groupName)
 
-        # 3D Style
-        if ele:
-            SetDefaultFootprint3DStyle(lyr_footprint)
-
-    if selectLayerByName(Beams_lyr, groupName) is None:
-        lyr_beams = newLinesLayer(
-            None,
-            [
-                "longitude",
-                "latitude",
-                "altitude",
-                "Corner Longitude",
-                "Corner Latitude",
-            ],
-            epsg,
-            Beams_lyr,
-            LineZ,
-        )
-        SetDefaultBeamsStyle(lyr_beams)
-        addLayerNoCrsDialog(lyr_beams, group=groupName)
-        # 3D Style
-        if ele:
-            SetDefaultBeams3DStyle(lyr_beams)
-
-    if selectLayerByName(Trajectory_lyr, groupName) is None:
-        lyr_Trajectory = newLinesLayer(
-            None, ["longitude", "latitude", "altitude"], epsg, Trajectory_lyr, LineZ
-        )
-        SetDefaultTrajectoryStyle(lyr_Trajectory)
-        addLayerNoCrsDialog(lyr_Trajectory, group=groupName)
-        # 3D Style
-        if ele:
-            SetDefaultTrajectory3DStyle(lyr_Trajectory)
-
-    if selectLayerByName(FrameAxis_lyr, groupName) is None:
-        lyr_frameaxis = newLinesLayer(
-            None,
-            [
-                "longitude",
-                "latitude",
-                "altitude",
-                "Corner Longitude",
-                "Corner Latitude",
-                "Corner altitude",
-            ],
-            epsg,
-            FrameAxis_lyr,
-            LineZ,
-        )
-        SetDefaultFrameAxisStyle(lyr_frameaxis)
-        addLayerNoCrsDialog(lyr_frameaxis, group=groupName)
-        # 3D Style
-        if ele:
-            SetDefaultFrameAxis3DStyle(lyr_frameaxis)
 
     if selectLayerByName(Platform_lyr, groupName) is None:
         lyr_platform = newPointsLayer(
@@ -886,43 +832,6 @@ def CreateVideoLayers(ele, name):
         )
         SetDefaultPlatformStyle(lyr_platform)
         addLayerNoCrsDialog(lyr_platform, group=groupName)
-        # 3D Style
-        if ele:
-            SetDefaultPlatform3DStyle(lyr_platform)
-
-    if selectLayerByName(Point_lyr, groupName) is None:
-        lyr_point = newPointsLayer(
-            None, ["number", "longitude", "latitude", "altitude"], epsg, Point_lyr
-        )
-        SetDefaultPointStyle(lyr_point)
-        addLayerNoCrsDialog(lyr_point, group=groupName)
-
-    if selectLayerByName(FrameCenter_lyr, groupName) is None:
-        lyr_framecenter = newPointsLayer(
-            None, ["longitude", "latitude", "altitude"], epsg, FrameCenter_lyr
-        )
-        SetDefaultFrameCenterStyle(lyr_framecenter)
-        addLayerNoCrsDialog(lyr_framecenter, group=groupName)
-        # 3D Style
-        if ele:
-            SetDefaultFrameCenter3DStyle(lyr_framecenter)
-
-    if selectLayerByName(Line_lyr, groupName) is None:
-        #         lyr_line = newLinesLayer(
-        # None, ["longitude", "latitude", "altitude"], epsg, Line_lyr)
-        lyr_line = newLinesLayer(None, [], epsg, Line_lyr)
-        SetDefaultLineStyle(lyr_line)
-        addLayerNoCrsDialog(lyr_line, group=groupName)
-
-    if selectLayerByName(Polygon_lyr, groupName) is None:
-        lyr_polygon = newPolygonsLayer(
-            None,
-            ["Centroid_longitude", "Centroid_latitude", "Centroid_altitude", "Area"],
-            epsg,
-            Polygon_lyr,
-        )
-        SetDefaultPolygonStyle(lyr_polygon)
-        addLayerNoCrsDialog(lyr_polygon, group=groupName)
 
     QApplication.processEvents()
 
@@ -949,36 +858,6 @@ def SetDefaultFootprintStyle(layer, sensor="DEFAULT"):
     layer.setRenderer(renderer)
 
 
-def SetDefaultFootprint3DStyle(layer):
-    """ Platform 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(255, 0, 0))
-    material.setAmbient(QColor(255, 0, 0))
-    symbol = QgsPolygon3DSymbol()
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
-
-
-def SetDefaultTrajectoryStyle(layer):
-    """ Trajectory Symbol """
-    style = S.getTrajectory("DEFAULT")
-    fill_sym = QgsLineSymbol.createSimple(
-        {
-            "color": style["COLOR"],
-            "width": style["WIDTH"],
-            "customdash": style["customdash"],
-            "use_custom_dash": style["use_custom_dash"],
-        }
-    )
-    renderer = QgsSingleSymbolRenderer(fill_sym)
-    layer.setRenderer(renderer)
-
-
 def SetDefaultPlatformStyle(layer, platform="DEFAULT"):
     """ Platform Symbol """
     style = S.getPlatform(platform)
@@ -991,76 +870,6 @@ def SetDefaultPlatformStyle(layer, platform="DEFAULT"):
 
     symbol_layer = QgsSvgMarkerSymbolLayer.create(svgStyle)
     layer.renderer().symbol().changeSymbolLayer(0, symbol_layer)
-
-
-def SetDefaultPlatform3DStyle(layer):
-    """ Platform 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(255, 0, 0))
-    material.setAmbient(QColor(255, 0, 0))
-    symbol = QgsPoint3DSymbol()
-    symbol.setShape(1)
-    S = {}
-    S["radius"] = 20
-    symbol.setShapeProperties(S)
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
-
-
-def SetDefaultTrajectory3DStyle(layer):
-    """ Trajectory 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(0, 0, 255))
-    material.setAmbient(QColor(0, 0, 255))
-    symbol = QgsLine3DSymbol()
-
-    symbol.setWidth(5)
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
-
-
-def SetDefaultFrameAxis3DStyle(layer):
-    """ Frame Axis 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(0, 0, 255))
-    material.setAmbient(QColor(0, 0, 255))
-    symbol = QgsLine3DSymbol()
-
-    symbol.setWidth(5)
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
-
-
-def SetDefaultBeams3DStyle(layer):
-    """ Beams 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(255, 255, 255))
-    material.setAmbient(QColor(255, 255, 255))
-    symbol = QgsLine3DSymbol()
-
-    symbol.setWidth(5)
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
 
 
 def SetDefaultFrameCenterStyle(layer):
@@ -1076,109 +885,6 @@ def SetDefaultFrameCenterStyle(layer):
     )
     renderer = QgsSingleSymbolRenderer(symbol)
     layer.setRenderer(renderer)
-
-
-def SetDefaultFrameCenter3DStyle(layer):
-    """ Frame Center 3D Symbol """
-    material = QgsPhongMaterialSettings()
-    material.setDiffuse(QColor(255, 255, 255))
-    material.setAmbient(QColor(255, 255, 255))
-    symbol = QgsPoint3DSymbol()
-    symbol.setShape(1)
-    S = {}
-    S["radius"] = 20
-    symbol.setShapeProperties(S)
-    symbol.setAltitudeClamping(2)
-    symbol.setMaterial(material)
-
-    renderer = QgsVectorLayer3DRenderer()
-    renderer.setLayer(layer)
-    renderer.setSymbol(symbol)
-    layer.setRenderer3D(renderer)
-
-
-def SetDefaultFrameAxisStyle(layer, sensor="DEFAULT"):
-    """ Line Symbol """
-    sensor_style = S.getSensor(sensor)
-    style = S.getFrameAxis()
-    fill_sym = QgsLineSymbol.createSimple(
-        {
-            "color": sensor_style["OUTLINE_COLOR"],
-            "width": sensor_style["OUTLINE_WIDTH"],
-            "outline_style": style["OUTLINE_STYLE"],
-        }
-    )
-    renderer = QgsSingleSymbolRenderer(fill_sym)
-    layer.setRenderer(renderer)
-
-
-def SetDefaultPointStyle(layer):
-    """ Point Symbol """
-    style = S.getDrawingPoint()
-    symbol = QgsMarkerSymbol.createSimple(
-        {
-            "name": style["NAME"],
-            "line_color": style["LINE_COLOR"],
-            "line_width": style["LINE_WIDTH"],
-            "size": style["SIZE"],
-        }
-    )
-
-    renderer = QgsSingleSymbolRenderer(symbol)
-    layer.setRenderer(renderer)
-
-    layer_settings = QgsPalLayerSettings()
-    text_format = QgsTextFormat()
-
-    text_format.setFont(QFont(style["LABEL_FONT"], style["LABEL_FONT_SIZE"]))
-    text_format.setColor(QColor(style["LABEL_FONT_COLOR"]))
-    text_format.setSize(style["LABEL_SIZE"])
-
-    buffer_settings = QgsTextBufferSettings()
-    buffer_settings.setEnabled(True)
-    buffer_settings.setSize(1)
-    buffer_settings.setColor(QColor(style["LABEL_BUFFER_COLOR"]))
-
-    text_format.setBuffer(buffer_settings)
-    layer_settings.setFormat(text_format)
-
-    layer_settings.fieldName = "number"
-    layer_settings.placement = 2
-    layer_settings.enabled = True
-
-    layer_settings = QgsVectorLayerSimpleLabeling(layer_settings)
-    layer.setLabelsEnabled(True)
-    layer.setLabeling(layer_settings)
-
-
-def SetDefaultLineStyle(layer):
-    """ Line Symbol """
-    style = S.getDrawingLine()
-    symbol = layer.renderer().symbol()
-    symbol.setColor(style["COLOR"])
-    symbol.setWidth(style["WIDTH"])
-
-
-def SetDefaultPolygonStyle(layer):
-    """ Polygon Symbol """
-    style = S.getDrawingPolygon()
-    fill_sym = QgsFillSymbol.createSimple(
-        {
-            "color": style["COLOR"],
-            "outline_color": style["OUTLINE_COLOR"],
-            "outline_style": style["OUTLINE_STYLE"],
-            "outline_width": style["OUTLINE_WIDTH"],
-        }
-    )
-    renderer = QgsSingleSymbolRenderer(fill_sym)
-    layer.setRenderer(renderer)
-
-
-def SetDefaultBeamsStyle(layer, beam="DEFAULT"):
-    """ Beams Symbol"""
-    style = S.getBeam(beam)
-    symbol = layer.renderer().symbol()
-    symbol.setColor(QColor.fromRgba(style["COLOR"]))
 
 
 # TODO : Update layer symbology if draw color change?
