@@ -284,28 +284,34 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         video_dir = self.settings.value('QGIS_FMV/Settings/video_dir')
         if video_dir:
             layer = self.iface.activeLayer()
-            for feat in layer.selectedFeatures():
-                try:
-                    filename = os.path.join(
-                        video_dir,
-                        feat.attribute('dateiname')
-                    )
-                    self.AddFileRowToManager(
-                        os.path.basename(filename),
-                        filename,
-                        islocal=True,
-                        klv_folder=os.path.join(
-                            os.path.dirname(filename),
-                            os.path.basename(filename).split('.')[0],
-                            'klv'
+            if layer:
+                for feat in layer.selectedFeatures():
+                    try:
+                        filename = os.path.join(
+                            video_dir,
+                            feat.attribute('dateiname')
                         )
-                    )
-                except KeyError as e:
-                    self.iface.messageBar().pushCritical(
-                        'Not a valid Layer!',
-                        'Layer {} is not valid.'.format(layer.name())
-                    )
-                    break
+                        self.AddFileRowToManager(
+                            os.path.basename(filename),
+                            filename,
+                            islocal=True,
+                            klv_folder=os.path.join(
+                                os.path.dirname(filename),
+                                os.path.basename(filename).split('.')[0],
+                                'klv'
+                            )
+                        )
+                    except KeyError as e:
+                        self.iface.messageBar().pushCritical(
+                            'Not a valid Layer!',
+                            'Layer {} is not valid.'.format(layer.name())
+                        )
+                        break
+            else:
+                self.iface.messageBar().pushCritical(
+                    'No layer selected',
+                    'You need to select a layer to load videos from.'
+                )
         else:
             self.iface.messageBar().pushCritical(
                 "No video directory!",

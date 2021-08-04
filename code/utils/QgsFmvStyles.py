@@ -95,7 +95,7 @@ class FmvLayerStyles(object):
 
     # Default
     P["DEFAULT"] = {}
-    P["DEFAULT"]["NAME"] = ":/imgFMV/images/platforms/platform_default.svg"
+    P["DEFAULT"]["NAME"] = ":/imgFMV/images/platforms/platform.svg"
     P["DEFAULT"]["OUTLINE"] = "255, 255, 255, 60"
     P["DEFAULT"]["OUTLINE_WIDTH"] = "1"
     P["DEFAULT"]["SIZE"] = "18"
