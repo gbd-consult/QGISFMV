@@ -252,6 +252,7 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                     [x.id() for x in layers]
                     )
             try:
+                print(self.conn)
                 tablename = 'datei_view'
                 schemaname = 'video'
                 uri = QgsDataSourceUri(
@@ -262,9 +263,13 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
                 uri.setWkbType(QgsWkbTypes.LineString)
                 uri.setKeyColumn('video_id')
                 layer = QgsVectorLayer(uri.uri(False), layername, 'postgres')
-                QgsProject.instance().addMapLayer(layer)
-
-                self.iface.showAttributeTable(layer)
+                if layer.isValid():
+                    QgsProject.instance().addMapLayer(layer)
+                    self.iface.showAttributeTable(layer)
+                else:
+                    raise QgsProviderConnectionException(
+                        'Layer not valid!'
+                        )
 
             except QgsProviderConnectionException as e:
                 self.iface.messageBar().pushCritical(
