@@ -33,13 +33,11 @@ from QGIS_FMV.utils.QgsFmvLayers import (
     RemoveGroupByName,
 )
 from QGIS_FMV.utils.QgsFmvUtils import (
-    initElevationModel,
     ResetData,
     getVideoFolder,
     BurnDrawingsImage,
     _spawn,
     UpdateLayers,
-    hasElevationModel,
     askForFiles,
     askForFolder,
     setCenterMode,
@@ -672,31 +670,6 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
                 )
             )
 
-    #     def currentMediaChanged(self, media):
-    #
-    #         idx = self.parent.playlist.currentIndex()
-    #         if idx != -1:
-    #             self.parent.VManager.selectRow(idx)
-    #
-    #             if not self.parent.videoPlayable[idx]:
-    #                 qgsu.showUserAndLogMessage("", "Video not playable. " + str(idx), onlyLog=True)
-    #                 QTimer.singleShot(300, lambda: self.player.setPosition(self.player.duration()))
-    #                 return
-    #             if self.parent.initialPt[idx] and self.parent.dtm_path != '':
-    #                 # init elevation model
-    #                 try:
-    #                     initElevationModel(self.parent.initialPt[idx][0], self.parent.initialPt[idx][1], self.parent.dtm_path)
-    #                     qgsu.showUserAndLogMessage("", "Elevation model initialized.", onlyLog=True)
-    #                 except Exception as e:
-    #                     qgsu.showUserAndLogMessage("", "Elevation model NOT initialized: " + str(e), onlyLog=True)
-    #                     None
-    #             # update filename
-    #             self.fileName = self.parent.VManager.item(idx, 3).text()
-    #
-    #             self.setWindowTitle(QCoreApplication.translate(
-    #                 "QgsFmvPlayer", 'Playing : ') + os.path.basename(media.canonicalUrl().toString()))
-    #             self.parent.SetupPlayer(idx)
-
     def rateChanged(self, _qreal):
         """Signals the playbackRate has changed to rate.
         @type value: qreal
@@ -1283,28 +1256,13 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
                 + os.path.basename(videoPath)
             )
 
-            CreateVideoLayers(hasElevationModel(), videoPath)
+            CreateVideoLayers(False, videoPath)
 
             self.HasFileAudio = True
             if not self.HasAudio(videoPath):
                 self.actionAudio.setEnabled(False)
                 self.actionSave_Audio.setEnabled(False)
                 self.HasFileAudio = False
-
-            # Check if has terrain
-            if self.parent.dtm_path != "":
-                # init elevation model
-                try:
-                    idx = self.parent.playlist.currentIndex()
-                    initElevationModel(
-                        self.parent.initialPt[idx][0],
-                        self.parent.initialPt[idx][1],
-                        self.parent.dtm_path,
-                    )
-                    # qgsu.showUserAndLogMessage("", "Elevation model initialized.", onlyLog=True)
-                except Exception as e:
-                    # qgsu.showUserAndLogMessage("", "Elevation model NOT initialized: " + str(e), onlyLog=True)
-                    None
 
             self.playClicked(True)
 

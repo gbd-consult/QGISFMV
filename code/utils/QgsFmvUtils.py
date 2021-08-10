@@ -558,14 +558,6 @@ def GetGCPGeoTransform():
     return gv.getTransform()
 
 
-def hasElevationModel():
-    """ Check if DEM is loaded """
-    if dtm_data is not None and len(dtm_data) > 0:
-        return True
-    else:
-        return False
-
-
 def SetImageSize(w, h):
     """ Set Image Size """
     gv.setXSize(w)
@@ -622,55 +614,6 @@ def ResetData():
     SetcrtSensorSrc()
     SetcrtPltTailNum()
 
-
-# TODO : Study other way to save or get DTM values, withou settings value
-def initElevationModel(frameCenterLat, frameCenterLon, dtm_path):
-    """ Start DEM transformation and extract data for set Z value in points """
-    global dtm_data, dtm_transform, dtm_colLowerBound, dtm_rowLowerBound
-
-    # Reset global DTM data when change video
-    dtm_data = []
-    # Initialize the dtm once, based on a zone arouind the target
-    qgsu.showUserAndLogMessage("", "Initializing DTM.", onlyLog=True)
-    dataset = gdal.Open(dtm_path)
-    if dataset is None:
-        qgsu.showUserAndLogMessage(
-            QCoreApplication.translate("QgsFmvUtils", "Failed to read DTM file. "),
-            level=QGis.Warning,
-        )
-        return
-    band = dataset.GetRasterBand(1)
-    dtm_transform = dataset.GetGeoTransform()
-    xOrigin = dtm_transform[0]
-    yOrigin = dtm_transform[3]
-    pixelWidth = dtm_transform[1]
-    pixelHeight = -dtm_transform[5]
-    cIndex = int((frameCenterLon - xOrigin) / pixelWidth)
-    rIndex = int((frameCenterLat - yOrigin) / (-pixelHeight))
-    dtm_colLowerBound = cIndex - dtm_buffer
-    dtm_rowLowerBound = rIndex - dtm_buffer
-    if dtm_colLowerBound < 0 or dtm_rowLowerBound < 0:
-        qgsu.showUserAndLogMessage(
-            QCoreApplication.translate(
-                "QgsFmvUtils",
-                "There is no DTM for theses bounds. Check/increase DTM_buffer_size in settings.ini",
-            ),
-            level=QGis.Warning,
-        )
-    else:
-        # qgsu.showUserAndLogMessage("UpdateLayers: ", " dtm_colLowerBound:"+str(dtm_colLowerBound)+" dtm_rowLowerBound:"+str(dtm_rowLowerBound)+" dtm_buffer:"+str(dtm_buffer), onlyLog=True)
-        dtm_data = band.ReadAsArray(
-            dtm_colLowerBound, dtm_rowLowerBound, 2 * dtm_buffer, 2 * dtm_buffer
-        )
-        if dtm_data is not None:
-            qgsu.showUserAndLogMessage(
-                "",
-                "DTM successfully initialized, len: " + str(len(dtm_data)),
-                onlyLog=True,
-            )
-    dataset = None
-
-
 def UpdateLayers(packet, parent=None, mosaic=False, group=None):
     """ Update Layers Values """
     gv.setGroupName(group)
@@ -686,8 +629,8 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
     OffsetLat1 = packet.OffsetCornerLatitudePoint1
     LatitudePoint1Full = packet.CornerLatitudePoint1Full
 
-    UpdatePlatformData(packet, hasElevationModel())
-    UpdateTrajectoryData(packet, hasElevationModel())
+    UpdatePlatformData(packet, False)
+    UpdateTrajectoryData(packet, False)
 
     frameCenterPoint = [
         packet.FrameCenterLatitude,
@@ -713,21 +656,11 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
     # qgsu.showUserAndLogMessage("", "FC Alt:"+str(frameCenterPoint[2]), onlyLog=True)
 
     if OffsetLat1 is not None and LatitudePoint1Full is None:
-        if hasElevationModel():
-            frameCenterPoint = GetLine3DIntersectionWithDEM(
-                GetSensor(), frameCenterPoint
-            )
-
         CornerEstimationWithOffsets(packet)
         if mosaic:
             georeferencingVideo(parent)
 
     elif OffsetLat1 is None and LatitudePoint1Full is None:
-        if hasElevationModel():
-            frameCenterPoint = GetLine3DIntersectionWithDEM(
-                GetSensor(), frameCenterPoint
-            )
-
         CornerEstimationWithoutOffsets(packet)
         if mosaic:
             georeferencingVideo(parent)
@@ -769,7 +702,7 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         UpdateBeamsData(
@@ -778,7 +711,7 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         SetGCPsToGeoTransform(
@@ -788,15 +721,15 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
             cornerPointLL,
             frameCenterPoint[1],
             frameCenterPoint[0],
-            hasElevationModel(),
+            False,
         )
 
         if mosaic:
             georeferencingVideo(parent)
 
-    UpdateFrameCenterData(frameCenterPoint, hasElevationModel())
+    UpdateFrameCenterData(frameCenterPoint, False)
     UpdateFrameAxisData(
-        packet.ImageSourceSensor, GetSensor(), frameCenterPoint, hasElevationModel()
+        packet.ImageSourceSensor, GetSensor(), frameCenterPoint, False
     )
 
     # detect if we need a recenter or not. If Footprint and Platform fits in
@@ -998,14 +931,6 @@ def CornerEstimationWithOffsets(packet):
         if frameCenterPoint[0] is None and frameCenterPoint[1] is None:
             gv.setTransform(None)
             return True
-        if hasElevationModel():
-            cornerPointUL = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointUL)
-            cornerPointUR = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointUR)
-            cornerPointLR = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointLR)
-            cornerPointLL = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointLL)
-            frameCenterPoint = GetLine3DIntersectionWithDEM(
-                GetSensor(), frameCenterPoint
-            )
 
         UpdateFootPrintData(
             packet,
@@ -1013,7 +938,7 @@ def CornerEstimationWithOffsets(packet):
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         UpdateBeamsData(
@@ -1022,7 +947,7 @@ def CornerEstimationWithOffsets(packet):
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         SetGCPsToGeoTransform(
@@ -1032,7 +957,7 @@ def CornerEstimationWithOffsets(packet):
             cornerPointLL,
             frameCenterPoint[1],
             frameCenterPoint[0],
-            hasElevationModel(),
+            False,
         )
 
     except Exception:
@@ -1180,14 +1105,6 @@ def CornerEstimationWithoutOffsets(
         if frameCenterPoint[0] is None and frameCenterPoint[1] is None:
             gv.setTransform(None)
             return True
-        if hasElevationModel():
-            cornerPointUL = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointUL)
-            cornerPointUR = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointUR)
-            cornerPointLR = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointLR)
-            cornerPointLL = GetLine3DIntersectionWithDEM(GetSensor(), cornerPointLL)
-            frameCenterPoint = GetLine3DIntersectionWithDEM(
-                GetSensor(), frameCenterPoint
-            )
 
         if sensor is not None:
             return cornerPointUL, cornerPointUR, cornerPointLR, cornerPointLL
@@ -1198,7 +1115,7 @@ def CornerEstimationWithoutOffsets(
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         UpdateBeamsData(
@@ -1207,7 +1124,7 @@ def CornerEstimationWithoutOffsets(
             cornerPointUR,
             cornerPointLR,
             cornerPointLL,
-            hasElevationModel(),
+            False,
         )
 
         SetGCPsToGeoTransform(
@@ -1217,7 +1134,7 @@ def CornerEstimationWithoutOffsets(
             cornerPointLL,
             frameCenterPoint[1],
             frameCenterPoint[0],
-            hasElevationModel(),
+            False,
         )
 
     except Exception as e:
@@ -1253,74 +1170,6 @@ def GetDemAltAt(lon, lat):
     return float(alt)
 
 
-def GetLine3DIntersectionWithDEM(sensorPt, targetPt):
-    """ Obtain height for points,intersecting with DEM """
-    pt = []
-
-    sensorLat = sensorPt[0]
-    sensorLon = sensorPt[1]
-    sensorAlt = sensorPt[2]
-    targetLat = targetPt[0]
-    targetLon = targetPt[1]
-    try:
-        targetAlt = targetPt[2]
-    except Exception:
-        targetAlt = GetFrameCenter()[2]
-
-    initialPoint = QgsPointXY(sensorLon, sensorLat)
-    destPoint = QgsPointXY(targetLon, targetLat)
-
-    da = QgsDistanceArea()
-    da.setEllipsoid(WGS84String)
-    dist = da.measureLine(initialPoint, destPoint)
-
-    distance = sqrt(dist ** 2 + (targetAlt - sensorAlt) ** 2)
-    dLat = (targetLat - sensorLat) / distance
-    dLon = (targetLon - sensorLon) / distance
-    dAlt = (targetAlt - sensorAlt) / distance
-
-    xOrigin = dtm_transform[0]
-    yOrigin = dtm_transform[3]
-    pixelWidth = dtm_transform[1]
-    pixelHeight = -dtm_transform[5]
-
-    pixelWidthMeter = pixelWidth * (pi / 180.0) * 6378137.0
-
-    # start at k = sensor point, then test every pixel a point on the 3D line
-    # until we cross the dtm (diffAlt >= 0).
-
-    diffAlt = -1
-    for k in range(0, int(dtm_buffer * pixelWidthMeter), int(pixelWidthMeter)):
-        point = [sensorLon + k * dLon, sensorLat + k * dLat, sensorAlt + k * dAlt]
-
-        col = int((point[0] - xOrigin) / pixelWidth)
-        row = int((yOrigin - point[1]) / pixelHeight)
-        try:
-            diffAlt = (
-                point[2] - dtm_data[row - dtm_rowLowerBound][col - dtm_colLowerBound]
-            )
-
-        except Exception:
-            qgsu.showUserAndLogMessage(
-                "", "DEM point not found after all iterations.", onlyLog=True
-            )
-
-            break
-        if diffAlt <= 0:
-            pt = [point[1], point[0], point[2]]
-            break
-
-    if not pt:
-        # qgsu.showUserAndLogMessage(
-        #    "", "DEM point not found, last computed delta high: " + str(diffAlt), onlyLog=True)
-        # If fail,Return original point and add target elevation
-        l = list(targetPt)
-        l.append(targetAlt)
-        return l
-
-    return pt
-
-
 def BurnDrawingsImage(source, overlay):
     """Burn drawings into image
     @type source: QImage
@@ -1343,25 +1192,3 @@ def BurnDrawingsImage(source, overlay):
     # Restore size
     base = base.scaled(source.size(), Qt.IgnoreAspectRatio)
     return base
-
-
-# def GetLine3DIntersectionWithPlane(sensorPt, demPt, planeHeight):
-#     ''' Get Altitude from DEM '''
-#     sensorLat = sensorPt[0]
-#     sensorLon = sensorPt[1]
-#     sensorAlt = sensorPt[2]
-#     demPtLat = demPt[1]
-#     demPtLon = demPt[0]
-#     demPtAlt = demPt[2]
-#
-#     distance = sphere.distance([sensorLat, sensorLon], [demPtLat, demPtLon])
-#     distance = sqrt(distance ** 2 + (demPtAlt - demPtAlt) ** 2)
-#     dLat = (demPtLat - sensorLat) / distance
-#     dLon = (demPtLon - sensorLon) / distance
-#     dAlt = (demPtAlt - sensorAlt) / distance
-#
-#     k = ((demPtAlt - planeHeight) / (sensorAlt - demPtAlt)) * distance
-#     pt = [sensorLon + (distance + k) * dLon, sensorLat +
-#           (distance + k) * dLat, sensorAlt + (distance + k) * dAlt]
-#
-#     return pt

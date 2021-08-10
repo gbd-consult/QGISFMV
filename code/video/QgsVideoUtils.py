@@ -3,7 +3,6 @@ from QGIS_FMV.utils.QgsFmvUtils import (
     GetImageHeight,
     GetDemAltAt,
     GetFrameCenter,
-    hasElevationModel,
     GetGCPGeoTransform,
     GetGeotransform_affine,
 )
@@ -211,9 +210,5 @@ class VideoUtils(object):
         Longitude = float(round(transf[1], 7))
         Latitude = float(round(transf[0], 7))
         Altitude = float(round(targetAlt, 0))
-
-        if hasElevationModel():
-            alt = GetDemAltAt(transf[1], transf[0])
-            Altitude = round(alt, 0)
 
         return Longitude, Latitude, Altitude

@@ -41,7 +41,6 @@ from QGIS_FMV.utils.QgsFmvUtils import (
     SetImageSize,
     convertQImageToMat,
     GetGCPGeoTransform,
-    hasElevationModel,
     GetImageHeight,
 )
 from QGIS_FMV.video.QgsVideoFilters import VideoFilters as filter
@@ -687,20 +686,10 @@ class VideoWidget(QVideoWidget):
                     + "</span>"
                 )
 
-                if hasElevationModel():
-                    txt += (
-                        "<span style='font-size:10pt; font-weight:bold;'> Alt : </span>"
-                    )
-                    txt += (
-                        "<span style='font-size:9pt; font-weight:normal;'>"
-                        + ("%.0f" % Altitude)
-                        + "</span>"
-                    )
-                else:
-                    txt += (
-                        "<span style='font-size:10pt; font-weight:bold;'> Alt : </span>"
-                    )
-                    txt += "<span style='font-size:9pt; font-weight:normal;'>-</span>"
+                txt += (
+                    "<span style='font-size:10pt; font-weight:bold;'> Alt : </span>"
+                )
+                txt += "<span style='font-size:9pt; font-weight:normal;'>-</span>"
 
             self.parent.lb_cursor_coord.setText(txt)
 
