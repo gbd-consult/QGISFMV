@@ -59,121 +59,6 @@
      <number>7</number>
     </property>
     <item>
-     <layout class="QHBoxLayout" name="horizontalLayout_5">
-      <item>
-       <widget class="QToolButton" name="toolBtn_DPolygon">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::MenuButtonPopup</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>false</bool>
-        </property>
-        <addaction name="actionDraw_Polygon"/>
-        <addaction name="actionDraw_Polygon_remove_last"/>
-        <addaction name="actionDraw_Polygon_remove_all"/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="toolBtn_DPoint">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::MenuButtonPopup</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>false</bool>
-        </property>
-        <addaction name="actionDraw_Pinpoint"/>
-        <addaction name="actionRemove_Last_Pinpoint"/>
-        <addaction name="actionRemove_All_Pinpoint"/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="toolBtn_DLine">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::MenuButtonPopup</enum>
-        </property>
-        <addaction name="actionDraw_Line"/>
-        <addaction name="actionLast_Segment_Line"/>
-        <addaction name="actionRemove_Last_Line"/>
-        <addaction name="actionRemove_All_Line"/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="toolBtn_Cesure">
-        <property name="cursor">
-         <cursorShape>OpenHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::MenuButtonPopup</enum>
-        </property>
-        <addaction name="actionCensure"/>
-        <addaction name="actionRemove_Last_censured"/>
-        <addaction name="actionRemove_All_censured"/>
-       </widget>
-      </item>
-      <item>
-       <widget class="QToolButton" name="toolBtn_Measure">
-        <property name="cursor">
-         <cursorShape>PointingHandCursor</cursorShape>
-        </property>
-        <property name="text">
-         <string/>
-        </property>
-        <property name="autoExclusive">
-         <bool>false</bool>
-        </property>
-        <property name="popupMode">
-         <enum>QToolButton::MenuButtonPopup</enum>
-        </property>
-        <property name="autoRaise">
-         <bool>false</bool>
-        </property>
-        <addaction name="actionMeasureDistance"/>
-        <addaction name="actionMeasureArea"/>
-       </widget>
-      </item>
-      <item>
-       <spacer name="horizontalSpacer_4">
-        <property name="orientation">
-         <enum>Qt::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
-     </layout>
-    </item>
-    <item>
      <widget class="VideoWidget" name="videoWidget" native="true">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
@@ -250,59 +135,6 @@
       </property>
       <layout class="QHBoxLayout" name="horizontalLayout_3">
        <item>
-        <widget class="QPushButton" name="btn_Rec">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Record&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/imgFMV/images/record.png</normaloff>
-           <normalon>:/imgFMV/images/rec_on.png</normalon>:/imgFMV/images/record.png</iconset>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+R</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
-        <widget class="QPushButton" name="btn_GeoReferencing">
-         <property name="cursor">
-          <cursorShape>PointingHandCursor</cursorShape>
-         </property>
-         <property name="toolTip">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Create Mosaic&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="resources.qrc">
-           <normaloff>:/imgFMV/images/mosaic.png</normaloff>:/imgFMV/images/mosaic.png</iconset>
-         </property>
-         <property name="shortcut">
-          <string>Ctrl+M</string>
-         </property>
-         <property name="checkable">
-          <bool>true</bool>
-         </property>
-         <property name="flat">
-          <bool>true</bool>
-         </property>
-        </widget>
-       </item>
-       <item>
         <spacer name="horizontalSpacer_2">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -326,60 +158,11 @@
         </widget>
        </item>
        <item>
-        <spacer name="horizontalSpacer_3">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item>
-        <widget class="QComboBox" name="cmb_cursorCoord">
-         <property name="styleSheet">
-          <string notr="true"/>
-         </property>
-         <property name="sizeAdjustPolicy">
-          <enum>QComboBox::AdjustToContents</enum>
-         </property>
-         <item>
-          <property name="text">
-           <string>WGS84</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>MGRS</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item>
         <widget class="QPushButton" name="btn_jump_position">
          <property name="text">
           <string>Jump to map position</string>
          </property>
         </widget>
-       </item>
-       <item>
-        <spacer name="horizontalSpacer_5">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Fixed</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
        </item>
        <item>
         <widget class="QPushButton" name="btn_CaptureFrame">
@@ -783,20 +566,6 @@
    <addaction name="menuMap"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
-  <widget class="QToolBar" name="DrawToolBar">
-   <property name="windowTitle">
-    <string>Utils ToolBar</string>
-   </property>
-   <property name="toolTip">
-    <string>Utils ToolBar</string>
-   </property>
-   <attribute name="toolBarArea">
-    <enum>TopToolBarArea</enum>
-   </attribute>
-   <attribute name="toolBarBreak">
-    <bool>false</bool>
-   </attribute>
-  </widget>
   <action name="actionGray">
    <property name="checkable">
     <bool>true</bool>
@@ -1360,70 +1129,6 @@
  </resources>
  <connections>
   <connection>
-   <sender>gb_PlayerControls</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>toggleGroup(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>148</x>
-     <y>615</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>463</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_play</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>playClicked(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>174</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>11</x>
-     <y>398</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>sliderDuration</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>seek(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>72</x>
-     <y>462</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>3</x>
-     <y>518</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>volumeSlider</sender>
-   <signal>sliderMoved(int)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>setVolume(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>684</x>
-     <y>596</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>509</x>
-     <y>490</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionGray</sender>
    <signal>triggered(bool)</signal>
    <receiver>PlayerWindow</receiver>
@@ -1436,102 +1141,6 @@
     <hint type="destinationlabel">
      <x>346</x>
      <y>352</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_CaptureFrame</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>ExtractCurrentFrame()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>724</x>
-     <y>527</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>-1</x>
-     <y>442</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_volume</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>setMuted()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>531</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>349</x>
-     <y>569</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_stop</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>stop(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>134</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>112</x>
-     <y>532</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_previous</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>StartMedia()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>54</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>0</x>
-     <y>556</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_next</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>EndMedia()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>254</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>212</x>
-     <y>571</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_repeat</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>AutoRepeat(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>294</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>511</x>
-     <y>566</y>
     </hint>
    </hints>
   </connection>
@@ -1728,54 +1337,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>btn_rewind</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>rewindMedia()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>94</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>26</x>
-     <y>592</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_forward</sender>
-   <signal>clicked()</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>forwardMedia()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>214</x>
-     <y>603</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>179</x>
-     <y>594</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_Rec</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>RecordVideo(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>95</x>
-     <y>527</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>44</x>
-     <y>598</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionInvert_Color</sender>
    <signal>triggered(bool)</signal>
    <receiver>PlayerWindow</receiver>
@@ -1884,22 +1445,6 @@
     <hint type="destinationlabel">
      <x>305</x>
      <y>308</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>btn_GeoReferencing</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>createMosaic(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>135</x>
-     <y>527</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>110</x>
-     <y>594</y>
     </hint>
    </hints>
   </connection>
@@ -2048,150 +1593,6 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionRemove_All_censured</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeAllCensure()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRemove_Last_censured</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeLastCensured()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionDraw_Polygon_remove_last</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeLastPolygon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionDraw_Polygon_remove_all</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeAllPolygon()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRemove_Last_Pinpoint</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeLastPoint()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRemove_All_Pinpoint</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeAllPoint()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRemove_All_Line</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeAllLines()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionRemove_Last_Line</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeLastLine()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionLast_Segment_Line</sender>
-   <signal>triggered()</signal>
-   <receiver>videoWidget</receiver>
-   <slot>removeLastSegmentLine()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>276</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionCenter_on_Footprint</sender>
    <signal>toggled(bool)</signal>
    <receiver>PlayerWindow</receiver>
@@ -2272,18 +1673,194 @@
    </hints>
   </connection>
   <connection>
-   <sender>cmb_cursorCoord</sender>
-   <signal>currentIndexChanged(int)</signal>
+   <sender>gb_PlayerControls</sender>
+   <signal>toggled(bool)</signal>
    <receiver>PlayerWindow</receiver>
-   <slot>MouseLocationCoordinates(int)</slot>
+   <slot>toggleGroup(bool)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
-     <y>523</y>
+     <x>148</x>
+     <y>615</y>
     </hint>
     <hint type="destinationlabel">
-     <x>364</x>
-     <y>620</y>
+     <x>0</x>
+     <y>463</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_next</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>EndMedia()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>254</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>212</x>
+     <y>571</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_volume</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>setMuted()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>531</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>349</x>
+     <y>569</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_forward</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>forwardMedia()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>214</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>179</x>
+     <y>594</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_repeat</sender>
+   <signal>toggled(bool)</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>AutoRepeat(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>294</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>511</x>
+     <y>566</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>volumeSlider</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>setVolume(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>684</x>
+     <y>596</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>509</x>
+     <y>490</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_previous</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>StartMedia()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>54</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>0</x>
+     <y>556</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_rewind</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>rewindMedia()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>94</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>26</x>
+     <y>592</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_play</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>playClicked(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>174</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>11</x>
+     <y>398</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_stop</sender>
+   <signal>clicked(bool)</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>stop(bool)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>134</x>
+     <y>603</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>112</x>
+     <y>532</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>sliderDuration</sender>
+   <signal>sliderMoved(int)</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>seek(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>72</x>
+     <y>462</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>3</x>
+     <y>518</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btn_CaptureFrame</sender>
+   <signal>clicked()</signal>
+   <receiver>PlayerWindow</receiver>
+   <slot>ExtractCurrentFrame()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>724</x>
+     <y>527</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>-1</x>
+     <y>442</y>
     </hint>
    </hints>
   </connection>
@@ -2300,6 +1877,150 @@
     <hint type="destinationlabel">
      <x>555</x>
      <y>500</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionLast_Segment_Line</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeLastSegmentLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_Last_Line</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeLastLine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_All_censured</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeAllCensure()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_Last_censured</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeLastCensured()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_Last_Pinpoint</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeLastPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDraw_Polygon_remove_last</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeLastPolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_All_Line</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeAllLines()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionRemove_All_Pinpoint</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeAllPoint()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>actionDraw_Polygon_remove_all</sender>
+   <signal>triggered()</signal>
+   <receiver>videoWidget</receiver>
+   <slot>removeAllPolygon()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>373</x>
+     <y>276</y>
     </hint>
    </hints>
   </connection>

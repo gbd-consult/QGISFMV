@@ -95,9 +95,6 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         self.staticDraw = False
         self.playbackRateSlow = 0.7
         self.closing = False
-        # Create Draw Toolbar
-        self.DrawToolBar.addAction(self.actionMagnifying_glass)
-        self.DrawToolBar.addSeparator()
         self.btn_stop.setEnabled(False)
         self.PrecisionTimeStamp = ""
 
@@ -105,38 +102,7 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         self.map_canvas = self.iface.mapCanvas()
         self.point_tool = QgsMapToolEmitPoint(self.map_canvas)
 
-        # Draw Polygon QToolButton
-        self.toolBtn_DPolygon.setDefaultAction(self.actionDraw_Polygon)
-        self.DrawToolBar.addWidget(self.toolBtn_DPolygon)
 
-        # Draw Point QToolButton
-        self.toolBtn_DPoint.setDefaultAction(self.actionDraw_Pinpoint)
-        self.DrawToolBar.addWidget(self.toolBtn_DPoint)
-
-        # Draw Line QToolButton
-        self.toolBtn_DLine.setDefaultAction(self.actionDraw_Line)
-        self.DrawToolBar.addWidget(self.toolBtn_DLine)
-
-        #         self.DrawToolBar.addAction(self.actionHandDraw)
-        self.DrawToolBar.addSeparator()
-
-        # Measure QToolButton
-        self.toolBtn_Measure.setDefaultAction(self.actionMeasureDistance)
-        self.DrawToolBar.addWidget(self.toolBtn_Measure)
-        self.DrawToolBar.addSeparator()
-
-        # Censure QToolButton
-        self.toolBtn_Cesure.setDefaultAction(self.actionCensure)
-        self.DrawToolBar.addWidget(self.toolBtn_Cesure)
-        self.DrawToolBar.addSeparator()
-
-        # Stamp
-        self.DrawToolBar.addAction(self.actionStamp)
-        self.DrawToolBar.addSeparator()
-        # Object Tracking
-        self.DrawToolBar.addAction(self.actionObject_Tracking)
-
-        self.RecGIF = QMovie(":/imgFMV/images/record.gif")
         self.playIcon = QIcon(":/imgFMV/images/play-arrow.png")
         self.pauseIcon = QIcon(":/imgFMV/images/pause.png")
 
@@ -197,7 +163,6 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         # disable context menu
         self.menubarwidget.setContextMenuPolicy(Qt.NoContextMenu)
         # disable toolbar floating around main window
-        self.DrawToolBar.setFloatable(False)
 
         # Defalut WGS 84/ World Mercator (3D)
         # QgsProject.instance().setCrs(QgsCoordinateReferenceSystem(3395))
@@ -1184,9 +1149,6 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
 
         if self.PrecisionTimeStamp != "":
             self.lb_prec_ts.setText(self.PrecisionTimeStamp)
-
-        # Trigger mouse move event to update mouse position
-        self.videoWidget.mouseMoveEvent(None, True)
 
         self.labelDuration.setText(tStr)
 
