@@ -241,18 +241,18 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
         self.settings_dialog.exec_()
         return
 
-    
     def add_video_layer(self):
+        """Loads the datei view from our database connection."""
         if self.conn:
             layername = 'fmv_videos'
             project = QgsProject.instance()
+            # remove layer if it already exists
             layers  = project.mapLayersByName(layername)
             if layers != []:
                 project.removeMapLayers(
                     [x.id() for x in layers]
                     )
             try:
-                print(self.conn)
                 tablename = 'datei_view'
                 schemaname = 'video'
                 uri = QgsDataSourceUri(
@@ -286,6 +286,7 @@ class FmvManager(QDockWidget, Ui_ManagerWindow):
 
 
     def open_selected_video(self):
+        """Loads the selected Feature in the Videomanager."""
         video_dir = self.settings.value('QGIS_FMV/Settings/video_dir')
         if video_dir:
             layer = self.iface.activeLayer()

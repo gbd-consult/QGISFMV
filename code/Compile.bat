@@ -28,6 +28,7 @@ call pyuic5 --import-from QGIS_FMV.gui ui\ui_FmvMultiplexer.ui -o gui\ui_FmvMult
 call pyuic5 --import-from QGIS_FMV.gui ui\ui_FmvOpenStream.ui -o gui\ui_FmvOpenStream.py  
 call pyuic5 --import-from QGIS_FMV.gui ui\ui_FmvOptions.ui -o gui\ui_FmvOptions.py  
 call pyuic5 --import-from QGIS_FMV.gui ui\ui_FmvPlayer.ui -o gui\ui_FmvPlayer.py  
+call pyuic5 --import-from QGIS_FMV.gui ui\ui_FmvSettings.ui -o gui\ui_FmvSettings.py  
 
 ::Resources
 call pyrcc5 ui\resources.qrc -o gui\resources_rc.py
