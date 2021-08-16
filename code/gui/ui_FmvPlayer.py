@@ -205,7 +205,7 @@ class Ui_PlayerWindow(object):
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.LabelRole, self.btn_volume)
         self.volumeSlider = QtWidgets.QSlider(self.gb_PlayerControls)
         self.volumeSlider.setMaximum(100)
-        self.volumeSlider.setProperty("value", 100)
+        self.volumeSlider.setProperty("value", 0)
         self.volumeSlider.setOrientation(QtCore.Qt.Horizontal)
         self.volumeSlider.setObjectName("volumeSlider")
         self.formLayout.setWidget(0, QtWidgets.QFormLayout.FieldRole, self.volumeSlider)

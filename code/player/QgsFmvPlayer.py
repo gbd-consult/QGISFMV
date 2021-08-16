@@ -142,6 +142,8 @@ class QgsFmvPlayer(QMainWindow, Ui_PlayerWindow):
         # self.sliderDuration.mousePressed.connect(self.sliderDurationPressed)
         # self.volumeSlider.mousePressed.connect(self.setVolume)
 
+        self.player.setVolume(0)
+
         self.volumeSlider.setValue(self.player.volume())
         self.volumeSlider.enterEvent = self.showVolumeTip
 
