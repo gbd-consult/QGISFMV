@@ -554,8 +554,6 @@
      <string>Map</string>
     </property>
     <addaction name="actionCenter_on_Platform"/>
-    <addaction name="actionCenter_on_Footprint"/>
-    <addaction name="actionCenter_Target"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFrames"/>
@@ -1044,6 +1042,9 @@
   </action>
   <action name="actionCenter_on_Platform">
    <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
     <bool>true</bool>
    </property>
    <property name="icon">
@@ -1593,42 +1594,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>actionCenter_on_Footprint</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>centerMapFootprint(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>325</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>actionCenter_on_Platform</sender>
    <signal>toggled(bool)</signal>
    <receiver>PlayerWindow</receiver>
    <slot>centerMapPlatform(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>373</x>
-     <y>325</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>actionCenter_Target</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>PlayerWindow</receiver>
-   <slot>centerMapTarget(bool)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

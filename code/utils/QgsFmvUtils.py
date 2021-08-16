@@ -734,17 +734,13 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
 
     # detect if we need a recenter or not. If Footprint and Platform fits in
     # 80% of the map, do not trigger recenter.
-    f_lyr = selectLayerByName(Footprint_lyr, groupName)
     p_lyr = selectLayerByName(Platform_lyr, groupName)
-    t_lyr = selectLayerByName(FrameCenter_lyr, groupName)
 
     iface = gv.getIface()
     centerMode = gv.getCenterMode()
 
-    if f_lyr is not None and p_lyr is not None and t_lyr is not None:
-        f_lyr_out_extent = f_lyr.extent()
+    if p_lyr is not None:
         p_lyr_out_extent = p_lyr.extent()
-        t_lyr_out_extent = t_lyr.extent()
 
         # Default EPSG is 4326, f_lyr.crs().authid ()
         # Disable transform if we have the same projection wit layers anf
@@ -765,22 +761,6 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
                     list(p_lyr.getFeatures())[0].geometry().asPoint().y(),
                 )
             )
-            transT = xform.transform(
-                QgsPointXY(
-                    list(t_lyr.getFeatures())[0].geometry().asPoint().x(),
-                    list(t_lyr.getFeatures())[0].geometry().asPoint().y(),
-                )
-            )
-            f_lyr_feats = f_lyr.getFeatures()
-            if len(list(f_lyr_feats)) > 0:
-                rect = list(f_lyr_feats)[0].geometry().boundingBox()
-                rectLL = xform.transform(QgsPointXY(rect.xMinimum(), rect.yMinimum()))
-                rectUR = xform.transform(QgsPointXY(rect.xMaximum(), rect.yMaximum()))
-
-                f_lyr_out_extent = QgsRectangle(rectLL, rectUR)
-            t_lyr_out_extent = QgsRectangle(
-            transT.x(), transT.y(), transT.x(), transT.y()
-            )
             p_lyr_out_extent = QgsRectangle(
                 transP.x(), transP.y(), transP.x(), transP.y()
             )
@@ -793,15 +773,6 @@ def UpdateLayers(packet, parent=None, mosaic=False, group=None):
         # recenter map on platform
         if not map_detec_buffer.contains(p_lyr_out_extent) and centerMode == 1:
             iface.mapCanvas().setExtent(p_lyr_out_extent)
-        # recenter map on footprint
-        elif not map_detec_buffer.contains(f_lyr_out_extent) and centerMode == 2:
-            # zoom a bit wider than the footprint itself
-            iface.mapCanvas().setExtent(
-                f_lyr_out_extent.buffered(f_lyr_out_extent.width() * 0.5)
-            )
-        # recenter map on target
-        elif not map_detec_buffer.contains(t_lyr_out_extent) and centerMode == 3:
-            iface.mapCanvas().setExtent(t_lyr_out_extent)
 
         # Refresh Canvas
         iface.mapCanvas().refresh()
